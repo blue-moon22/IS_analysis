@@ -1,0 +1,6 @@
+contig	transposase_seq	transposase_start	transposase_end	itr_cluster	itr_position
+NODE_152_length_1504_cov_8.3844	NODE_152_length_1504_cov_8.3844_2	180	530	30520	1357
+NODE_5818_length_359_cov_2.22697	NODE_5818_length_359_cov_2.22697_1	171	359	163829	1
+NODE_11280_length_289_cov_2.05128	NODE_11280_length_289_cov_2.05128_1	2	289	4211776	48
+NODE_11280_length_289_cov_2.05128	NODE_11280_length_289_cov_2.05128_1	2	289	4211776	239
+NODE_13669_length_272_cov_0.62212	NODE_13669_length_272_cov_0.62212_1	2	271	1504454	78
