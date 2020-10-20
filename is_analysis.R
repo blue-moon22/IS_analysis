@@ -370,26 +370,30 @@ trsps_arg_is_summary <- trsps_arg_is %>%
   left_join(metadata, by = "ID") %>%
   filter(Visit_Number == 1) %>%
   group_by(Location_sampletype, Location, sample_type, sseqid, ARO.Name, Drug.Class.alt) %>%
-  summarise(n = n_distinct(ID))
-  
-tiff("figures/samples_arg_is.tiff", height = 5500, width = 4700, res = 200)
-ggplot(trsps_arg_is_summary, aes(ARO.Name, n, fill = Location_sampletype)) +
+  summarise(n = n_distinct(ID)) %>%
+  mutate(labels = paste0(Drug.Class.alt, " - ", ARO.Name)) 
+
+trsps_arg_is_summary$labels <- factor(trsps_arg_is_summary$labels, levels = rev(levels(factor(trsps_arg_is_summary$labels))))
+
+tiff("figures/samples_arg_is.tiff", height = 5500, width = 4000, res = 200)
+ggplot(trsps_arg_is_summary, aes(labels, n, fill = Location_sampletype)) +
   geom_bar(stat = "identity") +
-  facet_grid(Drug.Class.alt ~ ., space = "free", scales = "free", switch = "both") +
+  #facet_grid(Drug.Class.alt ~ ., space = "free", scales = "free", switch = "both") +
   theme_bw() +
   coord_flip() +
-  xlab("ARG") + ylab("No. samples") +
+  xlab("ARG Class - ARG") + ylab("No. samples") +
   #ggtitle(unique_sample_type[i]) +
-  scale_fill_manual("GIT Site - Region", values = cohort_cols, labels = names(cohort_cols)) +
+  scale_fill_manual("GIT Site -\nRegion", values = cohort_cols, labels = names(cohort_cols)) +
   #scale_y_continuous(breaks = seq(0, max(trsps_arg_is_summary$n_total), 1)) +
   theme(strip.text.y = element_text(angle = 180, size = 8),
-        axis.title = element_text(size = 20),
+        axis.title = element_text(size = 24),
         axis.text.x = element_text(size = 20),
-        legend.text = element_text(size = 20),
+        legend.text = element_text(size = 18),
         legend.title = element_text(size = 20),
         axis.ticks.y = element_blank(),
         panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        legend.position = "bottom")
 dev.off()
 
 # Number of ARGs
